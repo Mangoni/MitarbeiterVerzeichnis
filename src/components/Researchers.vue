@@ -38,6 +38,7 @@
           { text: "Name", sortable: true, value: "name" },
           { text: "ID", sortable: true, value: "_id" },
           { text: "Boss", sortable: true, value: "boss" },
+          { text: "department", sortable: true, value: "department" },
         ],
       };
     },
