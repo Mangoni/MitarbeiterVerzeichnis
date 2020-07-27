@@ -1,28 +1,25 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <researchers :researchers="data"> </researchers>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  import axios from 'axios'
+  import Researchers from "@/components/Researchers";
+  export default {
+    name: 'App',
+    components: {
+      Researchers
+    },
+    data() {
+      return {
+        data: []
+      };
+    },
+    mounted() {
+      axios
+              .get('http://localhost:3000/researchers')
+              .then(response => this.data = response.data)
+              .catch(error => console.log(error))
+    }
+  };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
