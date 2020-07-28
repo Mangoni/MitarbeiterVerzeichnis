@@ -1,16 +1,22 @@
 <template>
   <v-container>
-    <div id="researchers">
+    <div id="ResearcherID">
     </div>
+<!--    Kommentar-->
     <v-card>
       <v-toolbar dense light>
-        <h3 class="headline mb-0">Researchers</h3>
+        <h3 class="headline mb-0">Wissenschaftliche Mitarbeiter</h3>
       </v-toolbar>
       <v-card-text>
         <v-data-table
-                :headers="headers"
-                :items="researchers"
+                v-model="selected"
+                :headers="Ueberschriften"
+                :items="Mitarbeiter"
+                :single-select="singleSelect"
+                item-key="_id"
+                show-select
                 hide-default-footer
+
         >
           <template v-slot:item.name="{ item }">
             <router-link :to="{ name: 'editresearcher' }">{{ item.name }}</router-link>
@@ -25,20 +31,22 @@
   export default {
     name: "ResearchersOverview",
     props: {
-      researchers: Array
+      Mitarbeiter: Array
     },
-    data() {
+    data: function () {
       return {
+        singleSelect: true,
+        selected: [],
         dialog: false,
         dialogAssign: false,
         pagination: {
           rowsPerPage: 100
         },
-        headers: [
-          { text: "Name", sortable: true, value: "name" },
-          { text: "ID", sortable: true, value: "_id" },
-          { text: "Boss", sortable: true, value: "boss" },
-          { text: "department", sortable: true, value: "department" },
+        Ueberschriften: [
+          {align: 'end',  text: "Name", sortable: false,               value: "name"},
+          {               text: "ID", sortable: true,                  value: "_id"},
+          {               text: "Boss", sortable: true,                value: "boss"},
+          {               text: "department", sortable: true,          value: "department"},
         ],
       };
     },
@@ -47,3 +55,4 @@
     methods: {}
   };
 </script>
+

@@ -1,24 +1,24 @@
 <template>
-  <researchers :researchers="data"> </researchers>
+  <CResearchers :Mitarbeiter="daten"> </CResearchers>
 </template>
 
 <script>
   import axios from 'axios'
-  import Researchers from "@/components/Researchers";
+  import CResearchers from "@/components/Researchers";
   export default {
     name: 'App',
     components: {
-      Researchers
+      CResearchers
     },
     data() {
       return {
-        data: []
+        daten: []
       };
     },
     mounted() {
       axios
               .get('http://localhost:3000/researchers')
-              .then(response => this.data = response.data)
+              .then(response => this.daten = response.data)
               .catch(error => console.log(error))
     }
   };
