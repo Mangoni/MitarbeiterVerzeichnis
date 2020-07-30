@@ -1,17 +1,17 @@
 <template>
   <v-container>
-    <div id="ResearcherID">
-    </div>
+    <div id="ResearcherID">    </div>
 <!--    Kommentar-->
-    <v-card>
-      <v-toolbar dense light>
-        <h3 class="headline mb-0">Wissenschaftliche Mitarbeiter</h3>
+    <v-card >
+      <v-toolbar dense light  >
+        <h3 class="headline mb-0" >Wissenschaftliche Mitarbeiter</h3>
       </v-toolbar>
       <v-card-text>
         <v-data-table
                 v-model="selected"
                 :headers="Ueberschriften"
-                :items="Mitarbeiter"
+                :items="Mitarbeiter.researchers_root"
+
                 :single-select="singleSelect"
                 item-key="_id"
                 show-select
@@ -23,6 +23,13 @@
           </template>
         </v-data-table>
       </v-card-text>
+
+
+        <v-card-actions >
+
+          <v-btn id="BtnId" text outlined >Loeschen</v-btn>
+        </v-card-actions>
+
     </v-card>
   </v-container>
 </template>
