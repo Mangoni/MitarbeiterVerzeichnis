@@ -1,5 +1,10 @@
 <template>
-  <CResearchers :Mitarbeiter="daten"> </CResearchers>
+  <v-app dark>
+    <v-toolbar></v-toolbar>
+    <main>
+      <CResearchers :Mitarbeiter="daten" > </CResearchers>
+    </main>
+  </v-app>
 </template>
 
 <script>

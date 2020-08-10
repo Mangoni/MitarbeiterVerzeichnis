@@ -3,8 +3,9 @@
     <div id="ResearcherID">    </div>
 <!--    Kommentar-->
     <v-card >
-      <v-toolbar dense light  >
+      <v-toolbar dense dark  >
         <h3 class="headline mb-0" >Wissenschaftliche Mitarbeiter</h3>
+
       </v-toolbar>
       <v-card-text>
         <v-data-table
@@ -26,8 +27,11 @@
 
 
         <v-card-actions >
+          <v-btn id="BtnId" text outlined @click="MitarbeiterLoeschen">
+            <v-icon> mdi-delete </v-icon>
+            Löschen
 
-          <v-btn id="BtnId" text outlined >Loeschen</v-btn>
+          </v-btn>
         </v-card-actions>
 
     </v-card>
@@ -35,6 +39,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: "ResearchersOverview",
     props: {
@@ -59,7 +64,12 @@
     },
     created() {
     },
-    methods: {}
+    methods: {
+      MitarbeiterLoeschen(){
+        console.log("Debugger")
+        axios.delete('http://localhost:3000/deleteresearcher')
+      }
+    }
   };
 </script>
 
