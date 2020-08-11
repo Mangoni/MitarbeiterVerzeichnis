@@ -43,7 +43,30 @@
                         <v-col lg="4" align="center">
                             <v-text-field
                                     label="Name"
-                                    v-model="model"
+                                    v-model="neuerMitarbeiter"
+                            ></v-text-field>
+                        </v-col>
+
+
+
+                    </v-row>
+
+                    <v-row>
+                        <v-spacer></v-spacer>
+                        <v-col lg="4" align="center">
+                            <v-text-field
+                                    label="Boss"
+                                    v-model="neuerBoss"
+                            ></v-text-field>
+                        </v-col>
+                        <v-spacer></v-spacer>
+                    </v-row>
+                    <v-row>
+                        <v-spacer></v-spacer>
+                        <v-col lg="4" align="center">
+                            <v-text-field
+                                    label="Department"
+                                    v-model="neuesDepartment"
                             ></v-text-field>
                         </v-col>
 
@@ -74,7 +97,9 @@
             return {
                 singleSelect: true,
                 selected: [],
-                model: 'NameVomMitarbeiter',
+                neuerMitarbeiter: 'Neuer Mitarbeiter',
+                neuerBoss: 'Neuer Boss',
+                neuesDepartment: 'Neues Department',
                 selectedResearcherId: [],
                 dialog: false,
                 dialogAssign: false,
@@ -102,7 +127,11 @@
             },
             MitarbeiterAdden: function () {
                 //axios.post('http://localhost:3000/addresearcher',{data: this.Mitarbeiter.researchers_root.find(element => element.name == this.model)})
-                axios.post('http://localhost:3000/addresearcher', {name: this.model})
+                axios.post('http://localhost:3000/addresearcher', {
+                    name: this.neuerMitarbeiter,
+                    boss: this.neuerBoss,
+                    department: this.neuesDepartment
+                })
                 window.location.reload()
             }
         }
