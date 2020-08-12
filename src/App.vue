@@ -1,6 +1,8 @@
 <template>
   <v-app dark>
-    <v-toolbar></v-toolbar>
+    <div>
+      <v-toolbar></v-toolbar>
+    </div>
     <main>
       <CResearchers :Mitarbeiter="daten" > </CResearchers>
     </main>

@@ -5,102 +5,135 @@
         <v-card>
             <v-toolbar dense dark>
                 <h3 class="headline mb-0">Wissenschaftliche Mitarbeiter</h3>
-
             </v-toolbar>
-            <v-card-text>
-                <v-data-table
-                        v-model="selected"
-                        :headers="Ueberschriften"
-                        :items="Mitarbeiter.researchers_root"
 
-                        :single-select="singleSelect"
-                        item-key="_id"
-                        show-select
-                        hide-default-footer
-                >
-                    <template v-slot:item.name="{ item }">
-                        <router-link :to="{ name: 'editresearcher' }">{{ item.name }}</router-link>
-                    </template>
-                </v-data-table>
-            </v-card-text>
+            <v-data-table
+                    v-model="selected"
+                    :headers="Ueberschriften"
+                    :items="Mitarbeiter.researchers_root"
+
+                    :single-select="singleSelect"
+                    item-key="_id"
+                    show-select
+                    hide-default-footer
+            >
+                <template v-slot:item.name="{ item }">
+                    <router-link :to="{ name: 'editresearcher' }">{{ item.name }}</router-link>
+                </template>
+            </v-data-table>
 
             <v-divider></v-divider>
+            <v-divider></v-divider>
+            <v-divider></v-divider>
+
+            <v-card-title class="mt-2">
+                Mitarbeiter-Administration
+            </v-card-title>
 
 
-            <v-card-actions>
+            <v-card-actions class="mt-n5">
                 <v-container>
                     <v-row>
+                        <v-col class="pa-0">
+                            <v-card outlined height="100%">
 
+                                <v-card-title class="text-subtitle-2">
+                                    <v-col align="center" class="pa-0">
+                                        Löschen
+                                    </v-col>
+                                </v-card-title>
 
-                        <v-col lg="4" align="center">
-                            <v-btn id="BtnId" text outlined @click="MitarbeiterLoeschen">
-                                <v-icon> mdi-delete</v-icon>
-                                Mitarbeiter Löschen
-                            </v-btn>
+                                <!--    <v-card-text class="grow">
 
+                                    </v-card-text>-->
+
+                                <v-card-action>
+                                    <v-col align="center" class="pa-0">
+                                        <v-btn class="mt-14" id="BtnId" text outlined rounded
+                                               @click="MitarbeiterLoeschen">
+                                            <v-icon left> mdi-delete</v-icon>
+                                            Mitarbeiter Löschen
+                                        </v-btn>
+                                    </v-col>
+                                </v-card-action>
+                            </v-card>
                         </v-col>
+                        <v-col class="pa-0">
+                            <v-card outlined>
 
-                        <v-col lg="4" align="center">
-                            <v-text-field
-                                    label="Name"
-                                    v-model="neuerMitarbeiter"
-                            ></v-text-field>
+                                <v-card-title class="text-subtitle-2">
+                                    <v-col align="center" class="pa-0">
+                                        Hinzufügen
+                                    </v-col>
+                                </v-card-title>
+
+                                <v-card-text>
+
+                                    <v-text-field
+                                            label="Name"
+                                            v-model="neuerMitarbeiter"
+                                    ></v-text-field>
+
+                                    <v-text-field
+                                            label="Boss"
+                                            v-model="neuerBoss"
+                                    ></v-text-field>
+
+                                    <v-text-field
+                                            label="Department"
+                                            v-model="neuesDepartment"
+                                    ></v-text-field>
+
+                                </v-card-text>
+
+                                <v-card-action>
+                                    <v-col align="center">
+                                        <v-btn id="BtnId" text outlined color="success" @click="MitarbeiterAdden">
+                                            <v-icon left> mdi-plus</v-icon>
+                                            Hinzufügen
+                                        </v-btn>
+                                    </v-col>
+                                </v-card-action>
+                            </v-card>
                         </v-col>
-
-
-
                     </v-row>
 
                     <v-row>
-                        <v-spacer></v-spacer>
-                        <v-col lg="4" align="center">
-                            <v-text-field
-                                    label="Boss"
-                                    v-model="neuerBoss"
-                            ></v-text-field>
-                        </v-col>
-                        <v-spacer></v-spacer>
-                    </v-row>
-                    <v-row>
-                        <v-spacer></v-spacer>
-                        <v-col lg="4" align="center">
-                            <v-text-field
-                                    label="Department"
-                                    v-model="neuesDepartment"
-                            ></v-text-field>
-                        </v-col>
-
-                        <v-col lg="4" align="center">
-                            <v-btn id="BtnId" text outlined @click="MitarbeiterAdden">
-                                <v-icon> mdi-plus</v-icon>
-                                Hinzufügen
-                            </v-btn>
-                        </v-col>
-
+                        <v-btn fab>
+                            <v-icon>mdi-pencil</v-icon>
+                        </v-btn>
                     </v-row>
                 </v-container>
+
             </v-card-actions>
 
         </v-card>
+
+        <CFooter></CFooter>
+
     </v-container>
 </template>
 
 <script>
     import axios from 'axios'
+    import CFooter from "@/components/Footer";
 
     export default {
         name: "ResearchersOverview",
         props: {
             Mitarbeiter: Array
         },
+        components: {
+            CFooter
+        },
         data: function () {
             return {
                 singleSelect: true,
                 selected: [],
-                neuerMitarbeiter: 'Neuer Mitarbeiter',
-                neuerBoss: 'Neuer Boss',
-                neuesDepartment: 'Neues Department',
-                selectedResearcherId: [],
+                neuerMitarbeiter: '',
+                neuerBoss: '',
+                neuesDepartment: '',
+                //selectedResearcherId: [],
                 dialog: false,
                 dialogAssign: false,
                 pagination: {
