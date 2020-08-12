@@ -50,7 +50,7 @@
                                 <v-card-action>
                                     <v-col align="center" class="pa-0">
                                         <v-btn class="mt-14" id="BtnId" text outlined rounded
-                                               @click="MitarbeiterLoeschen">
+                                               @click="MitarbeiterLoeschen();SnackbarAnzeigen()">
                                             <v-icon left> mdi-delete</v-icon>
                                             Mitarbeiter Löschen
                                         </v-btn>
@@ -166,6 +166,9 @@
                     department: this.neuesDepartment
                 })
                 window.location.reload()
+            },
+            SnackbarAnzeigen: function (){
+                this.$store.commit('updateSnackbar',{show: true})
             }
         }
     };

@@ -6,6 +6,12 @@
     <main>
       <CResearchers :Mitarbeiter="daten" > </CResearchers>
     </main>
+    <v-snackbar
+      v-model="$store.state.snackbar.show"
+      :timeout = "6000"
+      :top="true">
+      Dies ist eine Snackbar.
+    </v-snackbar>
   </v-app>
 </template>
 
