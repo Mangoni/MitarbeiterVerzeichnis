@@ -4,13 +4,13 @@
       <v-toolbar></v-toolbar>
     </div>
     <main>
-      <CResearchers :Mitarbeiter="daten" > </CResearchers>
+      <CResearchers> </CResearchers>
     </main>
     <v-snackbar
       v-model="$store.state.snackbar.show"
       :timeout = "6000"
       :top="true">
-      Dies ist eine Snackbar.
+      {{$store.state.snackbar.message}}
     </v-snackbar>
   </v-app>
 </template>
@@ -23,15 +23,10 @@
     components: {
       CResearchers
     },
-    data() {
-      return {
-        daten: []
-      };
-    },
     mounted() {
       axios
               .get('http://localhost:3000/researchers')
-              .then(response => this.daten = response.data)
+              .then(response => this.$store.state.daten = response.data)
               .catch(error => console.log(error))
     }
   };

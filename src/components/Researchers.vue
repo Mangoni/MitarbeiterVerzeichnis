@@ -1,7 +1,6 @@
 <template>
     <v-container>
         <div id="ResearcherID"></div>
-        <!--    Kommentar-->
         <v-card>
             <v-toolbar dense dark>
                 <h3 class="headline mb-0">Wissenschaftliche Mitarbeiter</h3>
@@ -10,8 +9,7 @@
             <v-data-table
                     v-model="selected"
                     :headers="Ueberschriften"
-                    :items="Mitarbeiter.researchers_root"
-
+                    :items="$store.state.daten.researchers_root"
                     :single-select="singleSelect"
                     item-key="_id"
                     show-select
@@ -30,7 +28,6 @@
                 Mitarbeiter-Administration
             </v-card-title>
 
-
             <v-card-actions class="mt-n5">
                 <v-container>
                     <v-row>
@@ -43,14 +40,10 @@
                                     </v-col>
                                 </v-card-title>
 
-                                <!--    <v-card-text class="grow">
-
-                                    </v-card-text>-->
-
                                 <v-card-action>
                                     <v-col align="center" class="pa-0">
-                                        <v-btn class="mt-14" id="BtnId" text outlined rounded
-                                               @click="MitarbeiterLoeschen();SnackbarAnzeigen()">
+                                        <v-btn class="mt-14" id="BtnId2" text outlined rounded
+                                               @click="MitarbeiterLoeschen();SnackbarAnzeigen('gelöscht')">
                                             <v-icon left> mdi-delete</v-icon>
                                             Mitarbeiter Löschen
                                         </v-btn>
@@ -88,7 +81,8 @@
 
                                 <v-card-action>
                                     <v-col align="center">
-                                        <v-btn id="BtnId" text outlined color="success" @click="MitarbeiterAdden">
+                                        <v-btn id="BtnId" text outlined color="success"
+                                               @click="MitarbeiterAdden();SnackbarAnzeigen('hinzugefügt')">
                                             <v-icon left> mdi-plus</v-icon>
                                             Hinzufügen
                                         </v-btn>
@@ -110,8 +104,8 @@
         </v-card>
 
         <CFooter></CFooter>
-
     </v-container>
+
 </template>
 
 <script>
@@ -120,9 +114,6 @@
 
     export default {
         name: "ResearchersOverview",
-        props: {
-            Mitarbeiter: Array
-        },
         components: {
             CFooter
         },
@@ -133,7 +124,6 @@
                 neuerMitarbeiter: '',
                 neuerBoss: '',
                 neuesDepartment: '',
-                //selectedResearcherId: [],
                 dialog: false,
                 dialogAssign: false,
                 pagination: {
@@ -150,25 +140,30 @@
         created() {
         },
         methods: {
-            MitarbeiterLoeschen: function () {
-                console.log("Debugger")
-                console.log(this.selected[0]._id)
-                // console.log(this.Mitarbeiter.researchers_root)
-                //console.log(this.Mitarbeiter.researchers_root.find(element => element.name == 'Nina'))
-                axios.delete('http://localhost:3000/deleteresearcher', {data: this.selected[0]})
-                window.location.reload()
+            MitarbeiterLoeschen: async function () {
+                console.log("Löschvorgang gestartet.")
+                console.log("Mitarbeiter mit folgender Id wird gelöscht:", this.selected[0]._id)
+                await axios.delete('http://localhost:3000/deleteresearcher', {data: this.selected[0]})
+                axios.get('http://localhost:3000/researchers')
+                    .then(response => this.$store.state.daten = response.data)
+                    .catch(error => console.log(error))
             },
-            MitarbeiterAdden: function () {
-                //axios.post('http://localhost:3000/addresearcher',{data: this.Mitarbeiter.researchers_root.find(element => element.name == this.model)})
-                axios.post('http://localhost:3000/addresearcher', {
+            MitarbeiterAdden: async function () {
+                await axios.post('http://localhost:3000/addresearcher', {
                     name: this.neuerMitarbeiter,
                     boss: this.neuerBoss,
                     department: this.neuesDepartment
                 })
-                window.location.reload()
+                axios.get('http://localhost:3000/researchers')
+                    .then(response => this.$store.state.daten = response.data)
+                    .catch(error => console.log(error))
+                this.neuerMitarbeiter = ''
+                this.neuerBoss = ''
+                this.neuesDepartment = ''
             },
-            SnackbarAnzeigen: function (){
-                this.$store.commit('updateSnackbar',{show: true})
+            SnackbarAnzeigen: function (Aufgabe) {
+                this.$store.state.snackbar.show = "true"
+                this.$store.state.snackbar.message = "Der Mitarbeiter wurde " + Aufgabe + "."
             }
         }
     };
