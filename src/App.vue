@@ -20,6 +20,13 @@
                 :top="true">
             {{$store.state.snackbar.message}}
         </v-snackbar>
+        <hr>
+        <router-link to="/">Homey</router-link>
+        <router-link to="/Users">Nutzer</router-link>
+        <router-link to="/Magazin/2">Magazin</router-link>
+        <router-link to="/Steplist">Schrittliste</router-link>
+        <hr>
+        <router-view></router-view>
     </v-app>
 </template>
 

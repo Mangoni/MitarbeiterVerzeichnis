@@ -1,4 +1,5 @@
 <template>
+
     <div>
         <v-app-bar>
             <v-toolbar-title> Universitätsverwaltung</v-toolbar-title>
@@ -59,6 +60,7 @@
             </v-list>
         </v-navigation-drawer>
     </div>
+
 </template>
 
 <script>

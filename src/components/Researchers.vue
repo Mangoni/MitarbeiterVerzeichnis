@@ -93,7 +93,7 @@
                     </v-row>
 
                     <v-row>
-                        <v-btn fab>
+                        <v-btn fab @click="goToSteplist">
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
                     </v-row>
@@ -164,6 +164,9 @@
             SnackbarAnzeigen: function (Aufgabe) {
                 this.$store.state.snackbar.show = "true"
                 this.$store.state.snackbar.message = "Der Mitarbeiter wurde " + Aufgabe + "."
+            },
+            goToSteplist(){
+                this.$router.push({name:'nSteplist'})
             }
         }
     };
