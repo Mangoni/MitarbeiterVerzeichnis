@@ -7,6 +7,8 @@ import Users from "@/components/Users"
 import Home from "@/components/Home"
 import Magazin from "@/components/Magazin"
 import Steplist from "@/components/Steplist/Steplist"
+import Danke from "@/components/Danke"
+import EditResearcher from "@/components/EditResearcher"
 
 Vue.config.productionTip = false
 
@@ -16,7 +18,9 @@ const routes = [
   {path: '/Magazin/:MagazinId', component: Magazin},
   {path: '/users', component: Users},
   {path: '/Steplist', component: Steplist, name:'nSteplist'},
-  {path: '/', component: Home}
+  {path: '/', component: Home, name:'nHome'},
+  {path: '/Danke', component: Danke, name:'nDanke'},
+  {path: '/editresearcher', component: EditResearcher, name:'nEditResearcher'}
 ]
 
 const router = new VueRouter({

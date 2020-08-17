@@ -16,7 +16,7 @@
                     hide-default-footer
             >
                 <template v-slot:item.name="{ item }">
-                    <router-link :to="{ name: 'editresearcher' }">{{ item.name }}</router-link>
+                    <router-link :to="{ name: 'nEditResearcher' }">{{ item.name }}</router-link>
                 </template>
             </v-data-table>
 
@@ -28,7 +28,7 @@
                 Mitarbeiter-Administration
             </v-card-title>
 
-            <v-card-actions class="mt-n5">
+            <v-card-text class="mt-n5">
                 <v-container>
                     <v-row>
                         <v-col class="pa-0">
@@ -40,7 +40,7 @@
                                     </v-col>
                                 </v-card-title>
 
-                                <v-card-action>
+                                <v-card-actions>
                                     <v-col align="center" class="pa-0">
                                         <v-btn class="mt-14" id="BtnId2" text outlined rounded
                                                @click="MitarbeiterLoeschen();SnackbarAnzeigen('gelöscht')">
@@ -48,7 +48,7 @@
                                             Mitarbeiter Löschen
                                         </v-btn>
                                     </v-col>
-                                </v-card-action>
+                                </v-card-actions>
                             </v-card>
                         </v-col>
                         <v-col class="pa-0">
@@ -79,7 +79,7 @@
 
                                 </v-card-text>
 
-                                <v-card-action>
+                                <v-card-actions>
                                     <v-col align="center">
                                         <v-btn id="BtnId" text outlined color="success"
                                                @click="MitarbeiterAdden();SnackbarAnzeigen('hinzugefügt')">
@@ -87,36 +87,34 @@
                                             Hinzufügen
                                         </v-btn>
                                     </v-col>
-                                </v-card-action>
+                                </v-card-actions>
                             </v-card>
                         </v-col>
                     </v-row>
 
-                    <v-row>
-                        <v-btn fab @click="goToSteplist">
-                            <v-icon>mdi-pencil</v-icon>
+                    <v-row >
+                        <v-btn fab @click="goToSteplist" class="mt-4">
+                            <v-icon>mdi-shoe-print</v-icon>
                         </v-btn>
                     </v-row>
                 </v-container>
 
-            </v-card-actions>
+            </v-card-text>
 
         </v-card>
 
-        <CFooter></CFooter>
+
     </v-container>
 
 </template>
 
 <script>
     import axios from 'axios'
-    import CFooter from "@/components/Footer";
+
 
     export default {
         name: "ResearchersOverview",
-        components: {
-            CFooter
-        },
+
         data: function () {
             return {
                 singleSelect: true,

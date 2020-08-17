@@ -11,7 +11,7 @@
             </v-btn>
         </span>
 
-            <v-toolbar-item class="hidden-xs-only">
+            <v-toolbar-items class="hidden-xs-only">
                 <v-btn to="/" text>
                     <v-icon small left>
                         mdi-home
@@ -30,7 +30,7 @@
                     </v-icon>
                     Institute
                 </v-btn>
-            </v-toolbar-item>
+            </v-toolbar-items>
         </v-app-bar>
 
         <v-navigation-drawer

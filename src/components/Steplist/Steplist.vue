@@ -11,10 +11,35 @@
                         <v-stepper-step step="3"></v-stepper-step>
                     </v-stepper-header>
                     <v-stepper-items>
-                       <!-- <StepOne></StepOne>
-                        <StepTwo></StepTwo>
-                        <StepThree></StepThree>-->
+                        <StepOne
+                                :data="data"
+                                :rules="rules"
+                                :next="next"
+                        />
+                        <StepTwo
+                                :data="data"
+                                :rules="rules"
+                                :next="next"
+                                :previous="previous"
+                        />
+                        <StepThree
+                                :data="data"
+                                :submitOrder="submitOrder"
+                                :previous="previous"
+                        />
                     </v-stepper-items>
+<!--                        <StepTwo
+                                :data="data"
+                                :rules="rules"
+                                :next="next"
+                                :previous="previous"
+                        />
+                        <StepThree
+                                :data="data"
+                                :submitOrder="submitOrder"
+                                :previous="previous"
+                        />
+                    </v-stepper-items>-->
                 </v-stepper>
             </v-col>
         </v-row>
@@ -22,21 +47,48 @@
 </template>
 
 <script>
- /*   import StepOne from "StepOne";
-    import StepTwo from "StepTwo";
-    import StepThree from "StepThree";*/
+    import StepOne from "@/components/Steplist/StepOne";
+    import StepTwo from "@/components/Steplist/StepTwo";
+    import StepThree from "@/components/Steplist/StepThree";
 
     export default {
         name: "Steplist",
         data() {
             return {
-                step: 1
+                step: 1,
+                data:{
+                    email:'',
+                    name:'',
+                    phone:'',
+                    street:'',
+                    state:'',
+                    zip:'',
+                },
+                rules:{
+                    required: value => !!value || 'Required',
+                    zip: value => value.length == 5 || 'Must be five charachters',
+                    phone: value => {
+                        const pattern = /\d{10}/
+                        return pattern.test(value)|| 'Invalid phone number.'
+                    }
+                }
             }
         },
         components:{
- /*           StepOne,
+            StepOne,
             StepTwo,
-            StepThree*/
+            StepThree
+        },
+        methods:{
+            next(){
+                this.step +=1
+            },
+            previous(){
+                this.step -=1
+            },
+            submitOrder(){
+                this.$router.push({name:'nDanke'})
+            }
         }
     }
 </script>
