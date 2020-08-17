@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-sheet
-                v-if="$vuetify.breakpoint.smAndUp"
+                v-if="$vuetify.breakpoint.mdAndUp"
                 :elevation="4"
                 class="pa-3"
 

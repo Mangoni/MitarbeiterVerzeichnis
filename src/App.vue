@@ -3,9 +3,9 @@
         <div>
             <CTopNavi></CTopNavi>
         </div>
-        <v-container>
+        <v-container fluid="true">
             <v-row>
-                <v-col md="3" offset-lg="1">
+                <v-col cols="12" md="3" offset-lg="1">
                     <CSidebar></CSidebar>
                 </v-col>
                 <v-col md="9" lg="7">
