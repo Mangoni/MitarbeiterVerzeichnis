@@ -9,7 +9,7 @@
             <v-data-table
                     v-model="selected"
                     :headers="Ueberschriften"
-                    :items="$store.state.daten.researchers_root"
+                    :items="$store.state.researchersData.researchers_root"
                     :single-select="singleSelect"
                     item-key="_id"
                     show-select
@@ -43,7 +43,7 @@
                                 <v-card-actions>
                                     <v-col align="center" class="pa-0">
                                         <v-btn class="mt-14" id="BtnId2" text outlined rounded
-                                               @click="MitarbeiterLoeschen();SnackbarAnzeigen('gelöscht')">
+                                               @click="deleteResearcher(selected[0]);showSnackbar('gelöscht')">
                                             <v-icon left> mdi-delete</v-icon>
                                             Mitarbeiter Löschen
                                         </v-btn>
@@ -64,17 +64,17 @@
 
                                     <v-text-field
                                             label="Name"
-                                            v-model="neuerMitarbeiter"
+                                            v-model="newResearcher.name"
                                     ></v-text-field>
 
                                     <v-text-field
                                             label="Boss"
-                                            v-model="neuerBoss"
+                                            v-model="newResearcher.boss"
                                     ></v-text-field>
 
                                     <v-text-field
                                             label="Department"
-                                            v-model="neuesDepartment"
+                                            v-model="newResearcher.department"
                                     ></v-text-field>
 
                                 </v-card-text>
@@ -82,7 +82,7 @@
                                 <v-card-actions>
                                     <v-col align="center">
                                         <v-btn id="BtnId" text outlined color="success"
-                                               @click="MitarbeiterAdden();SnackbarAnzeigen('hinzugefügt')">
+                                               @click="addResearcher(newResearcher);showSnackbar('hinzugefügt')">
                                             <v-icon left> mdi-plus</v-icon>
                                             Hinzufügen
                                         </v-btn>
@@ -109,9 +109,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
-
-
     export default {
         name: "ResearchersOverview",
 
@@ -119,9 +116,11 @@
             return {
                 singleSelect: true,
                 selected: [],
-                neuerMitarbeiter: '',
-                neuerBoss: '',
-                neuesDepartment: '',
+                newResearcher:{
+                    name:'',
+                    boss:'',
+                    department:''
+                },
                 dialog: false,
                 dialogAssign: false,
                 pagination: {
@@ -138,30 +137,14 @@
         created() {
         },
         methods: {
-            MitarbeiterLoeschen: async function () {
-                console.log("Löschvorgang gestartet.")
-                console.log("Mitarbeiter mit folgender Id wird gelöscht:", this.selected[0]._id)
-                await axios.delete('http://localhost:3000/deleteresearcher', {data: this.selected[0]})
-                axios.get('http://localhost:3000/researchers')
-                    .then(response => this.$store.state.daten = response.data)
-                    .catch(error => console.log(error))
+            deleteResearcher(selectedResearcher){
+                this.$store.dispatch('deleteResearcher',selectedResearcher)
             },
-            MitarbeiterAdden: async function () {
-                await axios.post('http://localhost:3000/addresearcher', {
-                    name: this.neuerMitarbeiter,
-                    boss: this.neuerBoss,
-                    department: this.neuesDepartment
-                })
-                axios.get('http://localhost:3000/researchers')
-                    .then(response => this.$store.state.daten = response.data)
-                    .catch(error => console.log(error))
-                this.neuerMitarbeiter = ''
-                this.neuerBoss = ''
-                this.neuesDepartment = ''
+            addResearcher(newResearcher){
+                this.$store.dispatch('addResearcher', newResearcher)
             },
-            SnackbarAnzeigen: function (Aufgabe) {
-                this.$store.state.snackbar.show = "true"
-                this.$store.state.snackbar.message = "Der Mitarbeiter wurde " + Aufgabe + "."
+            showSnackbar(task){
+                this.$store.commit('showSnackbar',task)
             },
             goToSteplist(){
                 this.$router.push({name:'nSteplist'})

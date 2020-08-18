@@ -51,7 +51,7 @@
         mounted() {
             axios
                 .get('http://localhost:3000/researchers')
-                .then(response => this.$store.state.daten = response.data)
+                .then(response => this.$store.state.researchersData = response.data)
                 .catch(error => console.log(error))
         }
     };
