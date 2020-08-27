@@ -6,19 +6,23 @@
                 <h3 class="headline mb-0">Wissenschaftliche Mitarbeiter</h3>
             </v-toolbar>
 
-            <v-data-table
-                    v-model="selected"
-                    :headers="Ueberschriften"
-                    :items="$store.state.researchersData.researchers_root"
-                    :single-select="singleSelect"
-                    item-key="_id"
-                    show-select
-                    hide-default-footer
-            >
-                <template v-slot:item.name="{ item }">
-                    <router-link :to="{ name: 'nEditResearcher' }">{{ item.name }}</router-link>
-                </template>
-            </v-data-table>
+            <v-container style="height: 30vh" class="overflow-y-auto">
+                <v-row v-scroll:#scroll-target="onScroll">
+                    <v-data-table
+                            v-model="selected"
+                            :headers="Ueberschriften"
+                            :items="$store.state.researchersData.researchers_root"
+                            :single-select="singleSelect"
+                            item-key="_id"
+                            show-select
+                            hide-default-footer
+                    >
+                        <template v-slot:item.name="{ item }">
+                            <router-link :to="{ name: 'nEditResearcher', params: {id:item._id }}">{{ item.name }}</router-link>
+                        </template>
+                    </v-data-table>
+                </v-row>
+            </v-container>
 
             <v-divider></v-divider>
             <v-divider></v-divider>
@@ -116,10 +120,10 @@
             return {
                 singleSelect: true,
                 selected: [],
-                newResearcher:{
-                    name:'',
-                    boss:'',
-                    department:''
+                newResearcher: {
+                    name: '',
+                    boss: '',
+                    department: ''
                 },
                 dialog: false,
                 dialogAssign: false,
@@ -132,22 +136,26 @@
                     {text: "Boss", sortable: true, value: "boss"},
                     {text: "department", sortable: true, value: "department"},
                 ],
+                offsetTop: 0
             };
         },
         created() {
         },
         methods: {
-            deleteResearcher(selectedResearcher){
-                this.$store.dispatch('deleteResearcher',selectedResearcher)
+            deleteResearcher(selectedResearcher) {
+                this.$store.dispatch('deleteResearcher', selectedResearcher)
             },
-            addResearcher(newResearcher){
+            addResearcher(newResearcher) {
                 this.$store.dispatch('addResearcher', newResearcher)
             },
-            showSnackbar(task){
-                this.$store.commit('showSnackbar',task)
+            showSnackbar(task) {
+                this.$store.commit('showSnackbar', task)
             },
-            goToSteplist(){
-                this.$router.push({name:'nSteplist'})
+            goToSteplist() {
+                this.$router.push({name: 'nSteplist'})
+            },
+            onScroll(e) {
+                this.offsetTop = e.target.scrollTop
             }
         }
     };

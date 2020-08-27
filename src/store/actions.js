@@ -16,5 +16,12 @@ export default {
         newResearcher.name=''
         newResearcher.boss=''
         newResearcher.department=''
+    },
+    async editResearcher({dispatch},editedResearcher){
+        console.log("EditedResearcher Object:")
+        console.log(editedResearcher)
+        await axios.patch('http://localhost:3000/editresearcher', editedResearcher)
+        console.log("Patch  ist erfolgt.")
+        dispatch('getResearchers')
     }
 }

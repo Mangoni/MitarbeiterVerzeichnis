@@ -17,7 +17,7 @@ const routes = [
     {path: '/Steplist', component: Steplist, name:'nSteplist'},
     {path: '/', component: Home, name:'nHome'},
     {path: '/Danke', component: Danke, name:'nDanke'},
-    {path: '/editresearcher', component: EditResearcher, name:'nEditResearcher'}
+    {path: '/editresearcher/:id', component: EditResearcher, name:'nEditResearcher', params: true, props:true}
 ]
 
 const router = new VueRouter({
