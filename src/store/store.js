@@ -13,7 +13,8 @@ export const store = new Vuex.Store({
             show: false,
             message: ''
         },
-        researchersData: []
+        researchersData: [],
+        selectedResearcher: {}
     },
     getters,
     mutations,

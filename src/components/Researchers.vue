@@ -6,7 +6,7 @@
                 <h3 class="headline mb-0">Wissenschaftliche Mitarbeiter</h3>
             </v-toolbar>
 
-            <v-container style="height: 30vh" class="overflow-y-auto">
+            <v-container style="height: 20vh" class="overflow-y-auto">
                 <v-row v-scroll:#scroll-target="onScroll">
                     <v-data-table
                             v-model="selected"
@@ -18,7 +18,11 @@
                             hide-default-footer
                     >
                         <template v-slot:item.name="{ item }">
-                            <router-link :to="{ name: 'nEditResearcher', params: {id:item._id }}">{{ item.name }}</router-link>
+                            <v-btn text
+                                    @click="openResearcherEditor(item)"
+                            >
+                                {{ item.name }}
+                            </v-btn>
                         </template>
                     </v-data-table>
                 </v-row>
@@ -156,7 +160,14 @@
             },
             onScroll(e) {
                 this.offsetTop = e.target.scrollTop
+            },
+            async openResearcherEditor(newSelectedResearcher){
+                await this.$store.commit( 'swapSelectedResearcher', newSelectedResearcher)
+                if (this.$route.name !== 'nEditResearcher') {
+                    this.$router.push({name: 'nEditResearcher'})
+                }
             }
+
         }
     };
 </script>
